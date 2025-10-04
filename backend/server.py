@@ -173,6 +173,8 @@ async def load_nasa_data(request: DataLoadRequest, background_tasks: BackgroundT
 @api_router.get("/data/overview")
 async def get_data_overview():
     """Get overview of loaded data."""
+    global current_dataset
+    
     try:
         if current_dataset is None:
             # Try to load from database
@@ -181,7 +183,6 @@ async def get_data_overview():
             if not records:
                 raise HTTPException(status_code=404, detail="No data loaded. Please load data first.")
             
-            global current_dataset
             current_dataset = pd.DataFrame([{k: v for k, v in record.items() if k != '_id'} for record in records])
         
         # Generate overview visualization
