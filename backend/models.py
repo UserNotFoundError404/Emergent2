@@ -77,7 +77,7 @@ class ModelTrainingRequest(BaseModel):
     test_size: float = Field(default=0.2, ge=0.1, le=0.5)
     random_state: int = Field(default=42)
     apply_scaling: bool = Field(default=True)
-    handle_missing: str = Field(default="median", regex="^(drop|median|mean)$")
+    handle_missing: str = Field(default="median", pattern="^(drop|median|mean)$")
 
 class ModelPredictionRequest(BaseModel):
     model_id: Optional[str] = Field(None, description="Specific model ID to use")
