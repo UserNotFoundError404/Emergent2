@@ -31,13 +31,23 @@ class NASADataLoader:
             logger.info(f"Loading Kepler confirmed planets (limit: {limit})")
             
             # Query NASA Exoplanet Archive for Kepler confirmed planets
-            query_params = {
-                'table': 'ps',  # Planetary Systems table
-                'select': 'kepler_name,hostname,pl_letter,pl_rade,pl_masse,pl_orbper,pl_orbsmax,pl_orbeccen,pl_eqt,st_rad,st_mass,st_teff,st_met,st_logg,sy_dist,disc_year,disc_facility,disc_telescope,disc_instrument',
-                'where': "disc_facility like '%Kepler%' and pl_name is not null",
-                'order': 'kepler_name',
-                'format': 'csv'
-            }
+            url = "https://exoplanetarchive.ipac.caltech.edu/TAP/sync"
+
+query = """
+SELECT kepler_name, hostname, pl_letter, pl_rade, pl_masse, pl_orbper, pl_orbsmax,
+       pl_orbeccen, pl_eqt, st_rad, st_mass, st_teff, st_met, st_logg, sy_dist,
+       disc_year, disc_facility, disc_telescope, disc_instrument
+FROM ps
+WHERE disc_facility LIKE '%Kepler%' AND pl_name IS NOT NULL
+ORDER BY kepler_name
+"""
+
+params = {
+    "query": query,
+    "format": "csv"
+}
+
+response = requests.get(url, params=params)
             
             if limit:
                 query_params['limit'] = str(limit)
