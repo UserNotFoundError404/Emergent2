@@ -22,7 +22,7 @@ class NASADataLoader:
     """
     
     def __init__(self):
-        self.api_key = os.environ.get('NASA_API_KEY')
+        self.api_key = os.environ.get('NOHDfuLb7GCko1NsNZdbXeRNb14bwqZpkNgby8mt')
         self.base_url = "https://exoplanetarchive.ipac.caltech.edu"
         
     async def load_kepler_confirmed_planets(self, limit: int = 2000) -> Optional[pd.DataFrame]:
@@ -33,9 +33,9 @@ class NASADataLoader:
             # Query NASA Exoplanet Archive for Kepler confirmed planets
             query_params = {
                 'table': 'ps',  # Planetary Systems table
-                'select': 'pl_name,hostname,pl_letter,pl_rade,pl_masse,pl_orbper,pl_orbsmax,pl_orbeccen,pl_eqt,st_rad,st_mass,st_teff,st_met,st_logg,sy_dist,disc_year,disc_facility,disc_telescope,disc_instrument',
+                'select': 'kepler_name,hostname,pl_letter,pl_rade,pl_masse,pl_orbper,pl_orbsmax,pl_orbeccen,pl_eqt,st_rad,st_mass,st_teff,st_met,st_logg,sy_dist,disc_year,disc_facility,disc_telescope,disc_instrument',
                 'where': "disc_facility like '%Kepler%' and pl_name is not null",
-                'order': 'pl_name',
+                'order': 'kepler_name',
                 'format': 'csv'
             }
             
