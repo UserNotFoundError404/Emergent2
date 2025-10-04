@@ -1,53 +1,61 @@
-import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout';
+import Dashboard from './components/Dashboard';
+import DataLoading from './components/DataLoading';
+import './App.css';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+// Placeholder components for other pages
+const DataAnalysis = () => (
+  <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <h1 className="text-2xl font-bold text-gray-900 mb-4">Data Analysis</h1>
+    <p className="text-gray-600">Data analysis and exploration tools coming soon...</p>
+  </div>
+);
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
+const MLTraining = () => (
+  <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <h1 className="text-2xl font-bold text-gray-900 mb-4">ML Training</h1>
+    <p className="text-gray-600">Machine learning model training interface coming soon...</p>
+  </div>
+);
 
-  useEffect(() => {
-    helloWorldApi();
-  }, []);
+const Predictions = () => (
+  <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <h1 className="text-2xl font-bold text-gray-900 mb-4">Predictions</h1>
+    <p className="text-gray-600">Exoplanet classification predictions coming soon...</p>
+  </div>
+);
 
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+const Visualizations = () => (
+  <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <h1 className="text-2xl font-bold text-gray-900 mb-4">Visualizations</h1>
+    <p className="text-gray-600">Interactive charts and visualizations coming soon...</p>
+  </div>
+);
+
+const LightCurves = () => (
+  <div className="bg-white rounded-lg border border-gray-200 p-6">
+    <h1 className="text-2xl font-bold text-gray-900 mb-4">Light Curves</h1>
+    <p className="text-gray-600">Light curve analysis and transit detection coming soon...</p>
+  </div>
+);
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="data" element={<DataLoading />} />
+          <Route path="analysis" element={<DataAnalysis />} />
+          <Route path="ml-training" element={<MLTraining />} />
+          <Route path="predictions" element={<Predictions />} />
+          <Route path="visualizations" element={<Visualizations />} />
+          <Route path="light-curves" element={<LightCurves />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
